@@ -1,0 +1,12 @@
+/*
+!.gitignore
+
+!.dwm/
+
+!.local/bin/
+
+!.config/tmux
+!.config/zsh
+!.config/nvim
+!.config/picom
+!.config/alacritty
