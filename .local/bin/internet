@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# Detecta interface ativa
+iface=$(ip route | awk '/default/ {print $5; exit}')
+
+# Se não encontrou nenhuma interface de rede
+[ -z "$iface" ] && {
+    echo "❌ No net"
+    exit 0
+}
+
+state=$(cat /sys/class/net/"$iface"/operstate 2>/dev/null)
+
+case "$state" in
+    up)
+        # Se for Wi-Fi, mostra intensidade do sinal
+        if grep -q "$iface" /proc/net/wireless 2>/dev/null; then
+            signal=$(awk -v iface="$iface" '$1 ~ iface {print int($3 * 100 / 70)}' /proc/net/wireless)
+            echo " ${signal}%"
+        else
+            # Ethernet conectada
+            echo "🌐 Connected"
+        fi
+        ;;
+    down|*)
+        echo "❎ Disconnected"
+        ;;
+esac
+
+# case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
+# 	down) wifiicon="📡 " ;;
+# 	up) wifiicon="$(awk '/^\s*w/ { print "", int($3 * 100 / 70) "% " }' /proc/net/wireless)" ;;
+# esac
+#
+# # printf "%s%s\n" "$wifiicon" "$(sed "s/down/❎/;s/up/🌐/" /sys/class/net/e*/operstate 2>/dev/null)"
+# printf "%s%s\n" "$wifiicon"

@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# Caminho do sink padrão
+SINK=$(pactl info | awk -F': ' '/Default Sink/ {print $2}')
+# SINK="@DEFAULT_SINK@"
+
+# Função para atualizar a barra (sinal 10 no dwmblocks)
+update_bar() {
+    pkill -RTMIN+10 dwmblocks 2>/dev/null
+}
+# Se for chamado com argumento, controla o volume
+case "$1" in
+    up)
+        pactl set-sink-volume "$SINK" +5%
+        update_bar
+        exit
+        ;;
+    down)
+        pactl set-sink-volume "$SINK" -5%
+        update_bar
+        exit
+        ;;
+    mute)
+        pactl set-sink-mute "$SINK" toggle
+        update_bar
+        exit
+        ;; 
+esac
+
+# Caso contrário, apenas exibe o volume (para o dwmblocks)
+volstat="$(pactl list sinks)"
+
+# Verifica mute
+if echo "$volstat" | grep -q "Mute: yes"; then
+    printf "🔇 Mute\n"
+    exit
+fi
+
+# Obtém o valor do volume (primeira ocorrência de %)
+vol="$(echo "$volstat" | grep -o '[0-9]\+%' | head -n1 | tr -d '%')"
+
+# Define ícone de acordo com o nível
+if [ "$vol" -gt 70 ]; then
+    icon="🔊"
+elif [ "$vol" -lt 30 ]; then
+    icon="🔈"
+else
+    icon="🔉"
+fi
+
+printf "%s %s%%\n" "$icon" "$vol"

@@ -10,3 +10,19 @@
 !.config/nvim
 !.config/picom
 !.config/alacritty
+
+# Ignorar arquivos compilados
+.config/dwm/dwm
+.config/dwm/*.o
+
+# Backups e temporários
+.config/dwm/*~
+.config/dwm/*.swp
+.config/dwm/*.swo
+.config/dwm/*.bak
+.config/dwm/*.tmp
+.config/dwm/*.old
+
+# Logs
+.config/dwm/dwm.log
+
