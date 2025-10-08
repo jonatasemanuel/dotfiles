@@ -1,0 +1,32 @@
+/*
+!.gitignore
+
+!.zshrc
+!.local/bin/
+
+!.dwm/
+!.config/dwm
+!.config/dmenu
+!.config/dwmblocks
+
+!.config/tmux
+!.config/zsh
+!.config/nvim
+!.config/picom
+!.config/alacritty
+
+# compiles
+.config/dwm/dwm
+.config/dwm/*.o
+
+# some garbage
+.config/dwm/*~
+.config/dwm/*.swp
+.config/dwm/*.swo
+.config/dwm/*.bak
+.config/dwm/*.tmp
+.config/dwm/*.old
+
+# Logs
+.config/dwm/dwm.log
+
