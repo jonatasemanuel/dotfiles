@@ -1,9 +1,13 @@
 /*
 !.gitignore
 
-!.dwm/
-
+!.zshrc
 !.local/bin/
+
+!.dwm/
+!.config/dwm
+!.config/dmenu
+!.config/dwmblocks
 
 !.config/tmux
 !.config/zsh
@@ -11,11 +15,11 @@
 !.config/picom
 !.config/alacritty
 
-# Ignorar arquivos compilados
+# compiles
 .config/dwm/dwm
 .config/dwm/*.o
 
-# Backups e temporários
+# some garbage
 .config/dwm/*~
 .config/dwm/*.swp
 .config/dwm/*.swo

@@ -16,8 +16,8 @@ newnote() {
   file="$dir/$name.md"
   mkdir -p "$(dirname "$file")"
   
-  # setsid -f "$TERMINAL" -e "$EDITOR" "$file" >/dev/null 2>&1
-  setsid -f "$TERMINAL" -e tmux new-window "$EDITOR" "$file" >/dev/null 2>&1
+  setsid -f "$TERMINAL" -e "$EDITOR" "$file" >/dev/null 2>&1
+  # setsid -f "$TERMINAL" -e tmux new-window "$EDITOR" "$file" >/dev/null 2>&1
 }
 
 # Função principal — escolher nota existente ou criar nova
@@ -29,8 +29,8 @@ selected() {
 
   case "$choice" in
     New) newnote ;;
-    # *.md) setsid -f "$TERMINAL" -e "$EDITOR" "$folder/$choice" >/dev/null 2>&1 ;;
-    *.md) setsid -f "$TERMINAL" -e tmux new-window "$EDITOR" "$folder/$choice" >/dev/null 2>&1 ;;
+    *.md) setsid -f "$TERMINAL" -e "$EDITOR" "$folder/$choice" >/dev/null 2>&1 ;;
+    # *.md) setsid -f "$TERMINAL" -e tmux new-window "$EDITOR" "$folder/$choice" >/dev/null 2>&1 ;;
     *) exit ;;
   esac
 }
