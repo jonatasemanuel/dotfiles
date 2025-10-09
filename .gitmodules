@@ -6,13 +6,13 @@
 	url = git@github.com:alacritty/alacritty-theme.git
 [submodule ".config/dwm"]
 	path = .config/dwm
-	url = git@github.com:cdown/dwm.git
+	url = https://git.suckless.org/dwm
 [submodule ".config/dwmblocks"]
 	path = .config/dwmblocks
 	url = git@github.com:torrinfail/dwmblocks.git
 [submodule ".config/dmenu"]
 	path = .config/dmenu
-	url = git://git.suckless.org/dmenu
+	url = https://git.suckless.org/dmenu
 [submodule ".config/tmux/plugins/tmux-fzf"]
 	path = .config/tmux/plugins/tmux-fzf
 	url = git@github.com:sainnhe/tmux-fzf.git
