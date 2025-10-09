@@ -8,4 +8,4 @@
 
 [submodule ".config/dwmblocks"]
 	path = .config/dwmblocks
-	url = https://github.com/torrinfail/dwmblocks.git
+	url = git://github.com/torrinfail/dwmblocks.git
