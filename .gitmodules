@@ -4,15 +4,6 @@
 [submodule ".config/alacritty/themes"]
 	path = .config/alacritty/themes
 	url = git@github.com:alacritty/alacritty-theme.git
-[submodule ".config/dwm"]
-	path = .config/dwm
-	url = https://git.suckless.org/dwm
-[submodule ".config/dwmblocks"]
-	path = .config/dwmblocks
-	url = git@github.com:torrinfail/dwmblocks.git
-[submodule ".config/dmenu"]
-	path = .config/dmenu
-	url = https://git.suckless.org/dmenu
 [submodule ".config/tmux/plugins/tmux-fzf"]
 	path = .config/tmux/plugins/tmux-fzf
 	url = git@github.com:sainnhe/tmux-fzf.git
@@ -22,3 +13,12 @@
 [submodule ".config/tmux/plugins/tpm"]
 	path = .config/tmux/plugins/tpm
 	url = git@github.com:tmux-plugins/tpm.git
+; [submodule ".config/dwm"]
+; 	path = .config/dwm
+; 	url = https://git.suckless.org/dwm
+; [submodule ".config/dwmblocks"]
+; 	path = .config/dwmblocks
+; 	url = git@github.com:torrinfail/dwmblocks.git
+; [submodule ".config/dmenu"]
+; 	path = .config/dmenu
+; 	url = https://git.suckless.org/dmenu
