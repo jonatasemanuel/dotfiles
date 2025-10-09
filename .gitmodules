@@ -1,11 +1,24 @@
+[submodule ".config/tmux/plugins/minimal-tmux-status"]
+	path = .config/tmux/plugins/minimal-tmux-status
+	url = git@github.com:niksingh710/minimal-tmux-status.git
+[submodule ".config/alacritty/themes"]
+	path = .config/alacritty/themes
+	url = git@github.com:alacritty/alacritty-theme.git
+[submodule ".config/dwm"]
+	path = .config/dwm
+	url = git@github.com:cdown/dwm.git
+[submodule ".config/dwmblocks"]
+	path = .config/dwmblocks
+	url = git@github.com:torrinfail/dwmblocks.git
 [submodule ".config/dmenu"]
 	path = .config/dmenu
 	url = git://git.suckless.org/dmenu
-
-[submodule ".config/dwm"]
-	path = .config/dwm
-	url = git://git.suckless.org/dwm
-
-[submodule ".config/dwmblocks"]
-	path = .config/dwmblocks
-	url = https://github.com/torrinfail/dwmblocks.git
+[submodule ".config/tmux/plugins/tmux-fzf"]
+	path = .config/tmux/plugins/tmux-fzf
+	url = git@github.com:sainnhe/tmux-fzf.git
+[submodule ".config/tmux/plugins/tmux-sensible"]
+	path = .config/tmux/plugins/tmux-sensible
+	url = git@github.com:tmux-plugins/tmux-sensible.git
+[submodule ".config/tmux/plugins/tpm"]
+	path = .config/tmux/plugins/tpm
+	url = git@github.com:tmux-plugins/tpm.git
