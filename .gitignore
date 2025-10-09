@@ -16,7 +16,7 @@
 !.config/alacritty
 
 # Ignorar arquivos compilados
-*/bak.git
+**/bak.git
 .config/dwm/bak.git
 .config/dwmblocks/bak.git
 .config/dmenu/bak.git
