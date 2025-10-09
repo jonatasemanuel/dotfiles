@@ -15,11 +15,11 @@
 !.config/picom
 !.config/alacritty
 
-# compiles
+# Ignorar arquivos compilados
 .config/dwm/dwm
 .config/dwm/*.o
 
-# some garbage
+# Backups e temporários
 .config/dwm/*~
 .config/dwm/*.swp
 .config/dwm/*.swo

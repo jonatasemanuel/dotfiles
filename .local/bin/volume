@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# Função para atualizar a barra (sinal 10 no dwmblocks)
+update_bar() {
+    pkill -RTMIN+10 dwmblocks 2>/dev/null
+}
+
+# Função para pegar o sink padrão atual
+get_default_sink() {
+    pactl info | awk -F': ' '/Default Sink/ {print $2}'
+}
+
+# Função para aumentar o volume
+volume_up() {
+    SINK=$(get_default_sink)
+    VOL=$(pactl get-sink-volume "$SINK" | grep -o '[0-9]\+%' | head -n1 | tr -d '%')
+    NEW=$((VOL + 10))
+    if [ $NEW -gt 100 ]; then
+        NEW=100
+    fi
+    pactl set-sink-volume "$SINK" "${NEW}%"
+    update_bar
+}
+
+# Função para diminuir o volume
+volume_down() {
+    SINK=$(get_default_sink)
+    VOL=$(pactl get-sink-volume "$SINK" | grep -o '[0-9]\+%' | head -n1 | tr -d '%')
+    NEW=$((VOL - 10))
+    if [ $NEW -lt 0 ]; then
+        NEW=0
+    fi
+    pactl set-sink-volume "$SINK" "${NEW}%"
+    update_bar
+}
+
+# Caso de uso
+case "$1" in
+    up) volume_up ;;
+    down) volume_down ;;
+    mute) pactl set-sink-mute "$(get_default_sink)" toggle; update_bar ;;
+esac
+
+# Caso contrário, apenas exibe o volume (para o dwmblocks)
+SINK=$(get_default_sink)
+volstat="$(pactl list sinks | grep -A 15 "Name: $SINK")"
+
+# Verifica mute
+if echo "$volstat" | grep -q "Mute: yes"; then
+    printf "[ ▢ ]Mute\n"
+    exit
+fi
+
+# Obtém o valor do volume (primeira ocorrência de %)
+vol="$(echo "$volstat" | grep -o '[0-9]\+%' | head -n1 | tr -d '%')"
+
+# Barra horizontal
+BAR_WIDTH=5   # equivalente aos 8 blocos que você tinha
+FILLED=$((vol * BAR_WIDTH / 100))
+EMPTY=$((BAR_WIDTH - FILLED))
+
+# Cria a barra com blocos horizontais
+bar=$(printf '▢%.0s' $(seq 1 $FILLED))
+bar="$bar$(printf '%.0s' $(seq 1 $EMPTY))"
+
+# Exibe a barra horizontal com porcentagem
+printf "%s%s %s%%\n"  "$bar" "$reset" "$vol"

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+case "$1" in
+  play) playerctl play-pause ;;
+  prev) playerctl previous ;;
+  next) playerctl next ;;
+  *)  ;;
+esac
