@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# for script  in  $(ls ~/.local/bin/ | dmenu -c -i  )   ;  do echo $script; done
+folder="$HOME/.local/bin/"
+selected() {
+  choice=$(
+    echo "$(find "$folder" | sort -nr | cut -d' ' -f2- | awk -F'/' '{print $6}')" \
+    | dmenu -c -l 10 -i
+  )
+  command $choice
+}
+# selected() {
+#   choice=$(
+#     echo -e "New\n$(find "$folder" -type f -name "*.md" -printf '%T@ %P\n' 2>/dev/null | sort -nr | cut -d' ' -f2-)" \
+#     | dmenu -c -l 10 -i -p "Choose note or create new:"
+#   )
+#
+#   case "$choice" in
+#     New) newnote ;;
+#     *.md) setsid -f "$TERMINAL" -e "$EDITOR" "$folder/$choice" >/dev/null 2>&1 ;;
+#     *) exit ;;
+#   esac
+# }
+selected
+
+

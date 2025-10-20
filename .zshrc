@@ -12,6 +12,9 @@ export PATH=$PATH:$(go env GOPATH)/bin
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$PATH:/var/lib/flatpak/exports/bin"
 
+export TERMINAL="alacritty"
+export BROWSER="/usr/bin/zen"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -278,4 +281,3 @@ export FFF_SCROLL_DOWN=14
 # Default: img2sixel
 export FFF_SIXEL_CMD="img2sixel"
 
-export TERMINAL="alacritty"
