@@ -3,6 +3,7 @@
 DOFILES="$HOME/.config"
 
 STORAGE=""
+MOUNT=""
 FILES_PATH=""
 DOTFILES_PATH=""
 
@@ -44,7 +45,6 @@ send_all_dotfiles(){
 
 dotfiles(){
 	mkdir -p "${STORAGE}/Backup/.config"
-	wait
 
 	DOTFILES_PATH="${STORAGE}/Backup/.config/"
 
@@ -63,7 +63,6 @@ dotfiles(){
 
 send_files(){
 	mkdir -p "${STORAGE}/Backup/files"
-	wait
 
 	FILES_PATH="${STORAGE}/Backup/files"
 
@@ -93,8 +92,20 @@ chose_files(){
 }
 
 selected_storage(){
-	choice=$(echo -e "$( lsblk | grep "media" | dmenu -i -c | awk -F'/' '{print $5}' )")
-	STORAGE="/run/media/${USER}/${choice}"
+	storage=""
+
+	choice=$( lsblk -l | grep -E "sdb|sdc" | dmenu -i -c )
+
+	MOUNT=$(echo "$choice"  | sed 's/.*\(sdb[0-9]\+\|sdc[0-9]\+\).*/\1/' | xargs -I {} udisksctl mount -b /dev/{})
+
+	if [[ -n "${MOUNT+x}" ]]; then
+		get_disk="$(echo $choice | awk '{print$1}' )"
+		storage=$(udisksctl info -b  /dev/$get_disk | grep "MountPoints:" | awk -F'/' '{print $NF}' )
+	else
+		storage=$(echo "$MOUNT" | awk -F'/' '{print $NF}')
+	fi
+
+	STORAGE="$(echo /run/media/${USER}/$storage)"
 
 	chose_files
 }
