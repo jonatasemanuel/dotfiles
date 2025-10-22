@@ -1,24 +1,102 @@
 #!/usr/bin/env bash
 
-dotfiles="$HOME/.config/"
+DOFILES="$HOME/.config"
 
-dotfiles(){
-	# select
-	$dotfiles
+STORAGE=""
+FILES_PATH=""
+DOTFILES_PATH=""
+
+send_nvim(){
+	cp -u -r -v "${DOFILES}/nvim/" "${DOTFILES_PATH}/"
+}
+send_alacritty(){
+	cp -u -r -v "${DOFILES}/alacritty/" "${DOTFILES_PATH}/"
+}
+send_tmux(){
+	cp -u -r -v "${DOFILES}/tmux/" "${DOTFILES_PATH}/"
+
+}
+send_dmenu(){
+	cp -u -r -v "${DOFILES}/dmenu/" "${DOTFILES_PATH}/"
+}
+send_dwm(){
+	cp -u -r -v "${DOFILES}/dwm/" "${DOTFILES_PATH}/"
+
+}
+send_dwmblocks(){
+	cp -u -r -v "${DOFILES}/dwmblocks/" "${DOTFILES_PATH}/"
+
+}
+send_picom(){
+	cp -u -r -v "${DOFILES}/picom/" "${DOTFILES_PATH}/"
+
 }
 
-# sync_list=(
-# 	"$HOME/.config/dmenu/" 
-# 	"$HOME/.config/dwm/" 
-# 	"$HOME/.config/dwmblocks/"
-# 	"$HOME/.config/rofi/"
-# 	"$HOME/.config/tmux/"
-# 	"$HOME/.config/nvim/"
-# 	)
+send_all_dotfiles(){
+	send_alacritty
+	send_dmenu
+	send_nvim
+	send_tmux
+	send_dwm
+	send_dwmblocks
+	send_picom
+}
 
-case "$(printf ".config\nfiles\nsend_all" | dmenu -i -c -l 10)" in 
-	.config) dotfiles ;;
-	*) exit 1 ;;
-esac
+dotfiles(){
+	mkdir -p "${STORAGE}/Backup/.config"
+	wait
 
-# find $dotfiles | dmenu -c
+	DOTFILES_PATH="${STORAGE}/Backup/.config/"
+
+	case "$(printf "nvim\nalacritty\ntmux\ndmenu\ndwm\ndwmblocks\npicom\nall" | dmenu -i -c )" in
+		nvim) send_nvim ;;
+		alacritty) send_alacritty ;;
+		tmux) send_tmux ;;
+		dmenu) send_dmenu ;;
+		dwm) send_dwm ;;
+		dwmblocks) send_dwmblocks ;;
+		picom) send_picom ;;
+		all) send_all_dotfiles ;;
+		*) exit 1 ;;
+	esac
+}
+
+send_files(){
+	mkdir -p "${STORAGE}/Backup/files"
+	wait
+
+	FILES_PATH="${STORAGE}/Backup/files"
+
+	cp -u -r -v "${HOME}/Documents/" "${FILES_PATH}"
+	cp -u -r -v "${HOME}/Downloads/" "${FILES_PATH}"
+	cp -u -r -v "${HOME}/Music/" "${FILES_PATH}"
+	cp -u -r -v "${HOME}/notes/" "${FILES_PATH}"
+	cp -u -r -v "${HOME}/Pictures/" "${FILES_PATH}"
+	cp -u -r -v "${HOME}/Projects/" "${FILES_PATH}"
+	cp -u -r -v "${HOME}/Videos/" "${FILES_PATH}"
+}
+
+send_all(){
+	DOTFILES_PATH="${STORAGE}/Backup/.config/"
+	FILES_PATH="${STORAGE}/Backup/files"
+	send_files
+	send_all_dotfiles
+}
+
+chose_files(){
+	case "$(printf "dofiles\nfiles\nsend_all" | dmenu -i -c -l 3)" in 
+		dofiles) dotfiles ;;
+		files) send_files ;;
+		send_all) send_all ;;
+		*) exit 1 ;;
+	esac
+}
+
+selected_storage(){
+	choice=$(echo -e "$( lsblk | grep "media" | dmenu -i -c | awk -F'/' '{print $5}' )")
+	STORAGE="/run/media/${USER}/${choice}"
+
+	chose_files
+}
+
+selected_storage

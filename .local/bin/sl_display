@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+doubleDisplay()
+{
+    xrandr --output DisplayPort-0 --primary --mode 2560x1080 --pos 0x1080 \
+    --output HDMI-A-0 --mode 1920x1080 --pos 320x0 --above DisplayPort-0
+}
+
+principal()
+{
+    xrandr --output DisplayPort-0 --primary --mode 2560x1080 --pos 0x0 \
+    --output HDMI-A-0 --off
+}
+
+case "$(printf "double\nprincipal" | dmenu -i -c -l 2)" in 
+    double) doubleDisplay ;;
+    principal) principal ;;
+   *) exit 1 ;;
+esac
