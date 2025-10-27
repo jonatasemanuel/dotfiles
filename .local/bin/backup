@@ -1,35 +1,38 @@
 #!/usr/bin/env bash
 
-DOFILES="$HOME/.config"
+DOTFILES="$HOME/.config/"
+SCRIPTS="$HOME/.local/bin/"
 
 STORAGE=""
 MOUNT=""
+
 FILES_PATH=""
 DOTFILES_PATH=""
+SCRIPTS_PATH=""
 
 send_nvim(){
-	cp -u -r -v "${DOFILES}/nvim/" "${DOTFILES_PATH}/"
+	cp -u -r -v "${DOTFILES}/nvim/" "${DOTFILES_PATH}/"
 }
 send_alacritty(){
-	cp -u -r -v "${DOFILES}/alacritty/" "${DOTFILES_PATH}/"
+	cp -u -r -v "${DOTFILES}/alacritty/" "${DOTFILES_PATH}/"
 }
 send_tmux(){
-	cp -u -r -v "${DOFILES}/tmux/" "${DOTFILES_PATH}/"
+	cp -u -r -v "${DOTFILES}/tmux/" "${DOTFILES_PATH}/"
 
 }
 send_dmenu(){
-	cp -u -r -v "${DOFILES}/dmenu/" "${DOTFILES_PATH}/"
+	cp -u -r -v "${DOTFILES}/dmenu/" "${DOTFILES_PATH}/"
 }
 send_dwm(){
-	cp -u -r -v "${DOFILES}/dwm/" "${DOTFILES_PATH}/"
+	cp -u -r -v "${DOTFILES}/dwm/" "${DOTFILES_PATH}/"
 
 }
 send_dwmblocks(){
-	cp -u -r -v "${DOFILES}/dwmblocks/" "${DOTFILES_PATH}/"
+	cp -u -r -v "${DOTFILES}/dwmblocks/" "${DOTFILES_PATH}/"
 
 }
 send_picom(){
-	cp -u -r -v "${DOFILES}/picom/" "${DOTFILES_PATH}/"
+	cp -u -r -v "${DOTFILES}/picom/" "${DOTFILES_PATH}/"
 
 }
 
@@ -42,14 +45,21 @@ send_all_dotfiles(){
 	send_dwmblocks
 	send_picom
 }
+send_scripts(){
+	mkdir -p "${STORAGE}/Backup/.local"
 
+	SCRIPTS_PATH="${STORAGE}/Backup/.local/bin"
+	cp -u -r -v "${SCRIPTS}" "${SCRIPTS_PATH}"
+
+}
 dotfiles(){
 	mkdir -p "${STORAGE}/Backup/.config"
 
 	DOTFILES_PATH="${STORAGE}/Backup/.config/"
 
-	case "$(printf "nvim\nalacritty\ntmux\ndmenu\ndwm\ndwmblocks\npicom\nall" | dmenu -i -c )" in
-		nvim) send_nvim ;;
+	case "$(printf "  nvim\n  scripts\n tmux\n dmenu\n dwm\n dwmblocks\n picom\nall" | dmenu -i -c )" in
+		** ) send_nvim ;;
+		** ) send_scripts ;;
 		alacritty) send_alacritty ;;
 		tmux) send_tmux ;;
 		dmenu) send_dmenu ;;
@@ -83,10 +93,10 @@ send_all(){
 }
 
 chose_files(){
-	case "$(printf "dofiles\nfiles\nsend_all" | dmenu -i -c -l 3)" in 
-		dofiles) dotfiles ;;
-		files) send_files ;;
-		send_all) send_all ;;
+	case "$(printf "  dotfiles\n  files\n 󱢎 send_all" | dmenu -i -c -l 4)" in 
+		** ) dotfiles ;;
+		** ) send_files ;;
+		*󱢎* ) send_all ;;
 		*) exit 1 ;;
 	esac
 }
@@ -96,7 +106,7 @@ selected_storage(){
 
 	choice=$( lsblk -l | grep -E "sdb|sdc" | dmenu -i -c )
 
-	MOUNT=$(echo "$choice"  | sed 's/.*\(sdb[0-9]\+\|sdc[0-9]\+\).*/\1/' | xargs -I {} udisksctl mount -b /dev/{})
+	MOUNT=$(echo "$choice"  | sed 's/.*\(sdb[0-9]\+\|sdc[0-9]\+\).*/\1/' | xargs -I {} udisksctl mount -b /dev/{}) 1>& /dev/null
 
 	if [[ -n "${MOUNT+x}" ]]; then
 		get_disk="$(echo $choice | awk '{print$1}' )"

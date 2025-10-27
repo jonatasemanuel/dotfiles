@@ -9,7 +9,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$PATH:/usr/local/go/bin" 
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export PATH=$PATH:$(go env GOPATH)/bin
-export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$PATH:/var/lib/flatpak/exports/bin"
 
 export TERMINAL="alacritty"
@@ -140,13 +139,14 @@ zinit light zsh-users/zsh-completions
 
 # alias emacs="emacsclient -c -a 'emacs'"
 alias dotfiles='git --git-dir=$HOME/.gitconfigs/dotfiles.git --work-tree=$HOME'
-alias vim="nvim"
+alias v="nvim"
 
 [[ -f ~/.config/zsh/tmux.zsh ]] && source ~/.config/zsh/tmux.zsh
 [[  -f ~/.config/zsh/functions.zsh ]] && source ~/.config/zsh/functions.zsh
 
 
 # CHANGE TO SCRIPT FILES
+ 
 # Run 'fff' with 'f' or whatever you decide to name the function.
 f() {
     fff "$@"
@@ -280,4 +280,7 @@ export FFF_SCROLL_DOWN=14
 # Sixel image program.
 # Default: img2sixel
 export FFF_SIXEL_CMD="img2sixel"
+
+source <(fzf --zsh)
+bindkey '^R' fzf-history-widget
 

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# folder="$HOME/.local/bin/"
+# selected() {
+#   choice=$(
+#     echo "$(find "$folder" | sort -nr | cut -d' ' -f2- | awk -F'/' '{print $6}')" \
+#     | dmenu -c -l 10 -i
+#   )
+#   command $choice
+# }
+
+folder="$HOME/.local/bin/"
+selected() {
+  case "$(printf " 󰔛 timer\n  backup\n 󱉧 txtclipboard\n  imageclip\n 󰹑 display\n 󱡫 audioswitch\n  removelogs" | dmenu -c -i )" in
+      *󰔛*) echo "timer" ;;
+      **) command backup ;;
+      *󱉧*) echo "clip" ;;
+      **) echo "clip" ;;
+      *󰹑*) command display ;;
+      *󱡫*) command audioswitch ;;
+      **) command removelogs ;;
+      *) exit 1;;
+     esac
+
+}
+
+
+selected
+
+

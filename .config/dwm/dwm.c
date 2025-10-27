@@ -213,6 +213,7 @@ static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
+static void sigstatusbar(const Arg *arg);
 static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
@@ -469,7 +470,11 @@ buttonpress(XEvent *e)
 					text = s + 1;
 					if (x >= ev->x)
 						break;
-					statussig = ch;
+					/* reset on matching signal raw byte */
+					if (ch == statussig)
+						statussig = 0;
+					else
+						statussig = ch;
 				}
 			}
 		} else

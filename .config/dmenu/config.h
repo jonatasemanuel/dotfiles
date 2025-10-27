@@ -3,17 +3,15 @@
 
 static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
 static int centered = 1;                    /* -c option; centers dmenu on screen */
-static int min_width = 300;                    /* minimum width when centered */
+static int min_width = 200;                    /* minimum width when centered */
 static const float menu_height_ratio = 4.0f;  /* This is the ratio used in the original calculation */
 /* -fn option overrides fonts[0]; default X11 font or font set */
-static const char *fonts[] = {
-	"monospace:size=12"
-};
+static const char *fonts[] = { "0xProto Nerd Font Propo:size=13", "NotoColorEmoji:pixelsize=13:antialias=true:autohint=true" };
 static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
 static const char *colors[SchemeLast][2] = {
 	/*     fg         bg       */
 	[SchemeNorm] = { "#ebdbb2", "#282828" },
-	[SchemeSel] = { "#ebdbb2", "#98971a" },
+	[SchemeSel] = { "#ebdbb2", "#bf8040" },
 	[SchemeOut] = { "#ebdbb2", "#8ec07c" },
 	[SchemeSelHighlight] = { "#ffc978", "#005577" },
 	[SchemeNormHighlight] = { "#ffc978", "#222222" },
@@ -34,4 +32,4 @@ static unsigned int lines      = 9;
 static const char worddelimiters[] = " ";
 
 /* Size of the window border */
-static unsigned int border_width = 5;
+static unsigned int border_width = 0;
